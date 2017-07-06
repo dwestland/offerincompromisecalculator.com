@@ -1,0 +1,193 @@
+// Custom Stylesheet for OicCalc
+// By Kevin Segal @TheInnovatorsAgency, 3/3/2016
+
+$green: #246924;
+$gray-green: #546454;
+$red: #5f1805;
+$gray: #000;
+$light-gray: #555;
+$med-gray: #222;
+$callout-font-family: 'Old Standard TT', serif;
+$primary-font-family: 'Old Standard TT', serif;
+$fancy-font-family: 'Petit Formal Script';
+$body-font-family: 'Roboto Slab', sans-serif;
+
+body {
+  font-family: $primary-font-family;
+  background: url(http://cdn.backgroundhost.com/backgrounds/subtlepatterns/wavecut.png) repeat;
+  background-attachment: fixed;
+  color: $gray;
+}
+p {
+  font-family: $body-font-family;
+}
+p.lead {
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  background: url(../img/money_border_bg.png) repeat-y;
+  background-size: contain;
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.5);
+  .inner {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+hr {
+  border-color: #000;
+}
+header {
+  background: url(../img/money_corner.png) no-repeat;
+  background-size: cover;
+  background-position: center top;
+}
+header .title {
+  padding: 5rem 0px 2rem 0px;
+}
+.pretitle {
+  margin-bottom:5px;
+  h4 {
+    border-bottom: 3px double $gray;
+    display:inline-block;
+    padding-left:2rem;
+    padding-right:2rem;
+    color: #000;
+    padding-bottom: 0.5rem;
+  }
+}
+.maintitle {
+  padding-top: 0;
+  line-height: 1.1;
+}
+footer {
+  background: url(../img/money_bottom.png) no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+  #footer {
+    padding-bottom: 8rem;
+  }
+}
+
+.trigger-row {
+  margin-top:1rem;
+  margin-bottom: 1rem;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  text-shadow: inset 1px 1px 0px rgba(250,250,250,0.75);
+  text-transform: uppercase;
+}
+h4,h5,h6 {
+  font-family: $body-font-family;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+a i {
+  padding-right: 10px;
+}
+.button {
+  text-transform: uppercase;
+  font-family: $body-font-family;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+fieldset {
+  border: 1px solid $gray;
+  padding: 1.5rem 2rem 2rem 2rem;
+  margin-bottom: 3rem;
+}
+legend {
+  font-size: 1.5rem;
+  font-family: $primary-font-family;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: $gray;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-align: center;
+  margin: 0 auto;
+}
+label, .label {
+  font-weight: 700;
+  font-size: 0.8rem;
+  font-family: $body-font-family;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: $gray;
+  &.long {
+    line-height: 2rem;
+  }
+  &.result {
+    color: $gray-green;
+  }
+}
+input {
+  font-family: $primary-font-family !important;
+  font-weight: 400;
+  border: 1px solid #000 !important;
+}
+
+.highlight, .result {
+  font-family: $primary-font-family;
+  font-weight: 400;
+  color: $green;
+  text-transform: uppercase;
+  vertical-align: middle;
+  &.positive {
+    color: $green;
+  }
+  &.negative {
+    color: $red;
+  }
+  &.special {
+    font-size:2rem;
+    margin-left:0.25rem;
+    margin-right:0.25rem;
+    vertical-align: middle;
+    font-family: $primary-font-family;
+    color: $green;
+  }
+}
+
+.callout {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000;
+  
+  &.success {
+  h2,h3,h4,h5,h6,p,.label,.label.calculated {color: #fff !important}
+    background: $green;
+    border-color: white;
+  }
+  &.fail {
+    h2,h3,h4,h5,h6,p,.label,.label.calculated {color: #fff !important}
+    background: $red;
+    border-color: white;
+  }
+  
+}
+.result-title {
+  font-family: $callout-font-family;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 20px;
+}
+.call-to-action-footer {
+  font-family: $fancy-font-family;
+  text-transform: capitalize;
+  margin-top:3rem;
+  margin-bottom:3rem;
+  line-height: 1.8;
+}
+@media screen and (max-width:62rem) {
+  label, .label {
+    &.label.long {
+      line-height: 1;
+    }
+  }
+}

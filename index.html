@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html ng-app>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Offer in Compromise Calculator - FREE find out if you qualify</title>
+    <meta name="description" content="Use our free Offer in Compromise Calculator and find out how much you can reduce your tax debt">
+    
+    
+    <link href="https://fonts.googleapis.com/css?family=Old+Standard+TT:400,400italic,700|Diplomata|Petit+Formal+Script|Roboto+Slab:400,500,700" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/app.css" rel="stylesheet" type="text/css" />
+    <link href="css/styles.css"  rel="stylesheet" type="text/css" />
+    <script src="js/angular.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.3/angular-moment.min.js" type="text/javascript"></script>
+    <script src="js/scale.fix.js" type="text/javascript"></script>
+    <script src="js/main.js" type="text/javascript"></script>
+  </head>
+  <body ng-controller="OicCalculatorCtrl">
+    <div class="container">
+        <header>
+            <div class="header">
+                <div class="row">
+                    <div class="small-12 columns text-center">
+                        <div class="title">
+                          <div class="pretitle" >
+                            <h4>Offer in Compromise</h4>
+                          </div>
+                          <div>
+                            <h1 class="maintitle">Qualification Calculator</span></h1>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="inner">
+          <div class="row">
+            <div class="small-12 columns text-center">
+              <p class="lead">Find out if you qualify for an Offer in Compromise</p>
+<p>For more information about an Offer in Compromise, call us at <strong>(888) 368-0111</strong></p>
+<p>For low cost Offer in Compromise assistance go to: <a href="http://irsexpress.com/">IRSexpress.com</a></p>
+                            <br>
+            </div>
+          </div>
+          <div class="row">
+            <div class="small-12 columns">
+                <form data-abide>
+                    <fieldset>
+                        <legend>Your Assets</legend>
+                        <div class="row">
+                            <div class="small-12 large-4 columns">
+                                <label for="monthly_income">Available Monthly Income:</label>
+                                <div class="input-group">
+                                    <input type="number" ng-model="assetIncome" ng-change="calculate()" required pattern="number">
+                                </div>
+                            </div>
+                            <div class="small-12 large-4 columns">
+                                <label for="assets_value">Assets (quick sale value):</label>
+                                <div class="input-group">
+                                    <input type="number" ng-model="assetQuickSale" ng-change="calculate()" required pattern="number">
+                                </div>
+                            </div>
+                            <div class="small-12 large-4 columns">
+                                <label for="home_equity">Home Equity Value:</label>
+                                <div class="input-group">
+                                    <input type="number" ng-model="assetEquity" ng-change="calculate()" required pattern="number">
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row results">
+                            <div class="small-6 large-6 columns">
+                                <span class="label calculated">Home Equity Value (Less 20%):</span>
+                                <h3>
+                                  <span class="highlight positive">{{ resultEquity | currency }}</span>
+                                  </h3>
+                            </div>
+                            <div class="small-6 large-6 columns">
+                                <span class="label calculated">Total Assets:</span>
+                                <h3><span class="highlight positive">{{ resultAssets | currency }}</span></h3>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset id="debts">
+                        <legend>Backtaxes Owed</legend>
+
+                        <div class="row collapse input">
+                          <div class="small-12 columns">
+                            
+                            <div id="debt1" class="row input-row" style="margin-top:20px;">
+                              <div class="small-6 columns">
+                                <label>Debt Owed to the IRS:</label> <input type="number" ng-model="debtAmount" ng-change="calculate()" required pattern="number"> 
+                              </div>
+                              <div class="small-6 columns">
+                                <label>IRS Assessed Date:</label> <input type="date"  ng-model="debtDate" ng-change="calculate()" data-abide-ignore>
+                              </div>
+                              <div class="small-12 columns"><hr/></div>
+                            </div>
+                            
+                            <div class="row trigger-row" ng-hide="showDebt2">
+                              <div class="small-12 columns text-center">
+                                <a href="" class="button" ng-click="showDebt2=true" ng-hide="showDebt2"><i class="fa fa-plus-circle"></i> Add Additional IRS Debts</a>
+                              </div>
+                            </div>
+                            <div ng-show="showDebt2">
+                              <div id="debt2" class="row input-row" style="margin-top: 20px;">
+                                <div class="small-6 columns">
+                                    <label>Debt Owed to the IRS:</label> <input type="number" ng-model="debtAmount2" ng-change="calculate()">
+                                </div>
+                                <div class="small-6 columns">
+                                    <label>IRS Assessed Date:</label> <input type="date"  ng-model="debtaddDate2" ng-change="calculate()" data-abide-ignore>
+                                </div>
+                                <div class="small-12 columns"><hr/></div>
+                              </div>
+                              <div class="row trigger-row" ng-hide="showDebt3">
+                                <div class="small-12 columns text-center">
+                                  <a href="" class="button" ng-click="showDebt3=true" ng-hide="showDebt3"><i class="fa fa-plus-circle"></i> Add Additional IRS Debt</a>
+                                </div>
+                              </div>
+                              <div id="debt3" ng-show="showDebt3" >
+                                <div class="row head"  style="margin-top:20px;">
+                                  <div class="small-6 columns">
+                                      <label>Debt Owed to the IRS:</label> <input type="number" ng-model="debtAmount3" ng-change="calculate()">
+                                  </div>
+                                  <div class="small-6 columns">
+                                      <label>IRS Assessed Date:</label> <input type="date"  ng-model="debtaddDate3" ng-change="calculate()" data-abide-ignore>
+                                  </div>
+                                  <div class="small-12 columns"><hr/></div>
+                                </div>
+                               
+                              </div>
+  
+                            </div>
+                            <div class="row trigger-row">
+                              <div class="small-12 columns text-center">
+                                <a href="" class="button" ng-click="showDebtDateExtra=true" ng-hide="showDebtDateExtra"><i class="fa fa-plus-circle"></i> Add Statute Extensions</a>
+                              </div>
+                            </div>
+                            <div id="DebtDateExtra" ng-show="showDebtDateExtra" class="row" style="padding-top:20px;">
+                              
+                              <div class="small-12 columns">
+                                <div class="row collapse">
+                                    <div class="small-12 large-10 columns">
+                                        <label class="long">How many months between previous OIC submission to rejection?</label>
+                                    </div>
+                                    <div class="small-12 large-2 columns">
+                                        <input type="number" ng-model="debtDateRej" value="0" ng-change="calculate()">
+                                    </div>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="small-12 large-10 columns">
+                                        <label class="long">If Taxpayer has been in bankruptcy, how many months?</label>
+                                    </div>
+                                    <div class="small-12 large-2 columns">
+                                        <input type="number" ng-model="debtDateBank" value="0" ng-change="calculate()">
+                                    </div>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="small-12 large-10 columns">
+                                        <label class="long">If Taxpayer has been in Collection Due Process (CDP), how many months?</label>
+                                    </div>
+                                    <div class="small-12 large-2 columns">
+                                        <input type="number" ng-model="debtDateCDP" value="0" ng-change="calculate()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                          </div>
+                        </div>
+                       
+                        <div class="row results" style="margin-top:20px;">
+
+                            <div class="small-12 columns"><hr /></div>
+                            <div class="small-12 medium-6 large-3 columns">
+                                <label class="label calculated">Total Debt Owed to IRS:</label>
+                                <h3><span class="highlight negative">{{ resultDebtTotal | currency }}</span></h3>
+                            </div>
+                            <div class="small-6 medium-6 large-3 columns">
+                                <label class="label calculated">Longest Statute:</label>
+                                <h3><span class="highlight">{{ resultLongestStatute | number }}</span></h3>
+                            </div>
+                            <div class="small-6 medium-6 large-3 columns">
+                                <label class="label calculated"><Additional Months/>Total Extensions:</label>
+                                <h3><span class="highlight">{{ resultAddMonths | number }}</span></h3>
+                            </div>
+                            <div class="small-6 medium-6 large-3 columns">
+                                <label class="label calculated">Max Months Left:</label>
+                                <h3><span class="highlight">{{ resultLongestStatute + resultAddMonths | number }}</span></h3>
+                            </div>
+                            <div class="small-12 columns"><hr /></div>
+                            <div class="small-12 columns text-center">
+                                <span class="label calculated">THE EXTENTED STATUTE EXPIRES ON</span>
+                                <h2 id="statute_expiration[]" class="highlight result" style="padding-top:10px;">{{ resultMaxExpirationDate | date : 'longDate' }}</h2>
+                            </div>
+                            <div class="small-12 columns text-center">
+                                <div style="display: inline-block;margin: 0 auto;padding-top:10px;">
+                                    <span class="label calculated">There are <span class="highlight result special">{{ resultAddMonths + resultLongestStatute | number }}</span> months remaining for the statute.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                  
+                    <fieldset>
+                      <legend>Qualification Results</legend>
+                    <div id="main_conclusions" class="row collapse">
+                    <div class="small-12 columns">
+                        <div class="row">
+                            <div class="small-12 large-4 columns text-center">
+                                <span class="label long calculated">Taxpayer's total IRS debt:</span>
+                                <h4 id="total_irs_debt" class="highlight negative">{{ resultDebtTotal | currency }}</h4>
+                            </div>
+                            <div class="small-12 large-4 columns text-center">
+                                <span class="label long calculated">Debt less Total Assets:</span>
+                                <h4 id="debt_less_total" class="highlight negative">{{ resultDebtLessAssets | currency }}</h4>
+                            </div>
+                            <div class="small-12 large-4 columns text-center">
+                                <span class="label long calculated">The Taxpayer can pay:</span>
+                                <h4 id="payable_amount" class="highlight positive">{{ resultMaxPayAmount | currency }}</h4>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="row">
+                            <div class="small-12 columns text-center">
+                                <div id="resultBox" class="callout" style="margin-top:20px;">
+                                    <div class="row collapse">
+                                        <div class="small-12 columns text-center">
+                                          <h4 class="result-title">{{ resultTitle }}</h4>
+                                        </div>
+                                    </div>
+                                    <div id="resultCalculations" class="row collapse" >
+                                        <div class="small-12 columns">
+                                            <div class="row">
+                                                <div class="small-12 columns text-center">
+                                                    <span class="label calculated">Recommended offer amount:</span>
+                                                    <h3 id="recommended_offer_amount" class="highlight">{{ resultPayAmount | currency }}</h3>
+                                                </div>
+                                            </div>
+                                                <hr>
+                                            <div class="row">
+                                                <div class="small-12 large-4 columns text-center">
+                                                  <span class="label calculated">Total Offer Amount:</span> 
+                                                  <h4>{{ resultPayAmount | currency }}</h4>
+                                                </div>
+                                                <div class="small-12 large-4 columns text-center">
+                                                  <span class="label calculated">20% Downpayment:</span> 
+                                                  <h4>{{ resultDownPayment | currency }}</h4>
+                                                </div>
+                                                <div class="small-12 large-4 columns text-center">
+                                                  <span class="label calculated">Five Equal Payments Of:</span>
+                                                  <h4>{{ resultPayments | currency }}</h4>
+                                                </div>
+                                            </div>                                         
+                                        </div>
+                                    </div>                                    
+                                </div>                                  
+                                <h4 class="call-to-action-footer" >
+                                  Contact Us Today to Discuss Your Options.<br><strong>(888) 368-0111</strong>
+                                </h4>
+                                <a href="/" class="button secondary">Clear Calculator</a>
+              
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+                    </fieldset>
+               </form>
+            </div>
+        </div>
+        <div id="instructions" class="row">
+          <div class="small-12 columns" style="padding:20px;">
+            <hr>
+            <h4 class="text-center">OIC Calculator Instructions</h4>
+            <hr>
+            
+                <h4>Your Assets</h4>
+                <p><strong>Available Monthly Income:</strong> This is your gross pay less federal tax, state tax and living expenses. There maybe other expenses you may also deduct from your income. However, there are expenses that don’t qualify as expenses by the IRS such as credit card payments and private school tuition. See FreeOfferInCompromise.com for more information acceptable expenses. </p>
+                <p><strong>Assets (Quick sale value):</strong> This would be the cash value of your assets if you were to sell them right now. Think how much they would be worth if you would sell them on Craigslist or at a garage sale.</p>
+                <p><strong>Home Equity Value:</strong> This would be the current value of your house less your mortgage balance. The Calculator will deduct 20% from this amount per the IRS rules.</p>
+                <p><strong>Total Assets:</strong> This is your Assets plus you Home Equity Value less 20%. This value will be used to calculate the offer amount for the IRS.</p>
+                <br><br>
+                <h4>Back Taxes Owed</h4>
+                <p><strong>Total Debt Owed to the IRS:</strong> This will be the single assessed tax year amount the IRS is claiming you owe them. If you have multiple assessed amounts from different tax years, use the advanced features below to enter multiple amounts. </p>
+                <p><strong>IRS Assessed Date:</strong> This will be the date the IRS assessed your tax debt.</p>
+                <p><strong>The Statute of Limitation Expires on X:</strong> This adds 10 years to your assessed date. The IRS Statue of Limitations is for 10 years after you debt was assessed by the IRS and you are obligated to pay during this time.</p>
+                <p><strong>There are X Months Remaining for the Statute:</strong> This is the number months remaining until your statute expires. This is used to calculate if your Available Monthly Income is enough to pay off your Total IRS Debt.</p>
+                <br><br>
+                <h4>Add Additional Debt or Statue Extensions</h4>
+                <p><strong>Add Additional Debt:</strong> If you owe the IRS for multiple tax years, you will need to add the Debt Amounts as well as that IRS Assessed Date </p>
+                <p><strong>Add Statute Extensions:</strong> This is a more complex Offer in Compromise. This would apply if you have gone through bankruptcy, applied for a previous Offer in Compromise or have had a Collection Due Process (CDP).</p>
+                <br><br>
+                <h5>These amounts will add months to your Months Remaining for the Statute:</h5>
+                <p><strong>How many Months from a Previous Offer In Compromise:</strong> This would be the number of months for the duration of a previous Offer In compromise, from submission date to rejection.</p>
+                <p><strong>Bankruptcy:</strong> This would be the number of months you were in bankruptcy. The calculator will also add 6 months to the amount per the IRS rules.</p>
+                <p><strong>Collection Due Process (CDP):</strong> This is the number of months you were in a Collection Due Process. This will be added to your Months Remaining for the Statute.</p>
+                <br><br>
+                <h4>Offer in Compromise Qualifying Calculations</h4>
+                <p>These are the calculations to determine if you qualify for an Offer in Compromise. The calculation takes the <strong>Total Debt Owed to the IRS</strong> and subtracts your <strong>Total Assets</strong>. The result is the <strong>IRS Debt less Total Assets amount</strong>. You multiply your <strong>Available Monthly Income</strong> times the <strong>Months Remaining for the Statute</strong>. If this amount is less than the <strong>Total Debt Owed to the IRS</strong>, congratulations, you may qualify for an Offer in Compromise. The result is 12 times your <strong>Available Monthly Income</strong>, which is the <strong>Recommended Offer Amount</strong>.</p>
+                <br><br>
+                <h4>Offer in Compromise Payment Calculation</h4>
+                <p>To determine the Payment Terms for you offer, you will need to give the IRS 20% of your Offer Amount plus an application fee of $186. You can pay the IRS the remaining amount of the offer of up to five payments. Important: You must summit at least a completed 433-A and a 656 form plus the required bank statements, pay stubs, etc. </p>
+                <p>Make sure you don’t send the IRS any money for an Offer in Compromise without all the forms properly filled out with the appropriate financial documents. Any money you send the IRS without the proper paperwork will not count towards you Offer in Compromise. See FreeOfferInCompromise.com for more details for submitting your offer to the IRS.</p>
+                <h5>For more information about an Offer in Compromise, call us at <strong>(888) 368-0111</strong></h5>
+                <p>For low cost Offer in Compromise assistance go to: <a href="http://irsexpress.com/">IRSexpress.com</a></p>
+                <br>
+                <p>You can get more information about the Offer in Compromise by going to the <a href="https://www.irs.gov/" target="_blank">IRS Website</a>. This is another service that helps with <a href="http://irs.treasury.gov/freetaxprep/" target="_blank">tax preparation</a>. The New York Public Library also provides <a href="http://www.nypl.org/help/community-outreach/income-tax-information" target="_blank">free income tax information</a>.
+                <br><br>
+        </div>
+        </div>
+        </div>
+        <footer>
+            <div id="footer">
+                <div class="row">
+                    <div class="small-12 columns text-center">
+                        <p>&copy; 2017 OfferInCompromiseCalculator.com</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" type="text/javascript"></script>
+    <script src="bower_components/foundation-sites/dist/foundation.js" type="text/javascript" ></script>
+    <script src="bower_components/what-input/what-input.min.js"></script>
+    <script src="js/app.js" type="text/javascript"></script>
+  </body>
+</html>
